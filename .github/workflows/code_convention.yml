@@ -1,31 +1,32 @@
-name: Python Convention Check
+name: PEP 8 Check
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
-    paths:
-      - '**.py'
 
 jobs:
-  conventions:
-    name: Check Conventions
+  lint:
+    name: Pylint
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.10.6  # Replace 'x' with your desired Python version
+          python-version: 3.x  # Replace 'x' with the desired Python version (e.g., 3.8, 3.9)
 
       - name: Install dependencies
-        run: pip install flake8 black  # You can modify the dependencies to fit your needs
-
-      - name: Run convention checks
         run: |
-          git fetch origin ${{ github.head_ref }}:refs/remotes/origin/${{ github.head_ref }}
-          git diff --name-only origin/main...origin/${{ github.head_ref }} -- '*.py' | xargs flake8 --config=flake8.ini --ignore=E501
-          git diff --name-only origin/main...origin/${{ github.head_ref }} -- '*.py' | xargs black --check --diff
+          python -m pip install --upgrade pip
+          pip install pylint
+
+      - name: Run Pylint
+        run: |
+          pylint --rcfile=.pylintrc <your-python-directory-or-file>
