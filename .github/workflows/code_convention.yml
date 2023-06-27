@@ -28,10 +28,13 @@ jobs:
         run: flake8 --ignore=E501 .
 
       - name: Comment on pull request
-        uses: unsplash/comment-on-pr@v1
+        uses: actions/github-script@v4
         with:
-          message: |
-            :warning: **PEP8 Check Failed**
-            
-            The PEP8 check failed. Please make sure your code follows PEP8 style guidelines.
-
+          script: |
+            const message = ':warning: **PEP8 Check Failed**\n\nThe PEP8 check failed. Please make sure your code follows PEP8 style guidelines.';
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });
