@@ -1,8 +1,3 @@
-# File: test.py
-import os
-
-def Sum():
-    pass
 def add_numbers(a, b):
     return a + b
 
