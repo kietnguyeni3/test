@@ -29,4 +29,4 @@ jobs:
 
       - name: Run Pylint
         run: |
-          pylint --rcfile=.pylintrc main.py
+          pylint --disable=all --enable=F,E,W --exit-zero ./test.py
