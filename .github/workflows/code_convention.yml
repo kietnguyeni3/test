@@ -29,4 +29,4 @@ jobs:
 
       - name: Run Pylint
         run: |
-          pylint --rcfile=.pylintrc <your-python-directory-or-file>
+          pylint --rcfile=.pylintrc main.py
